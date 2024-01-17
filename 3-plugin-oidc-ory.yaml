@@ -1,7 +1,7 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: client2-oidc-ory
+  name: client2-cicd-oidc-ory
   namespace: client2
 config:
   issuer: https://charming-raman-uhtak7x69c.projects.oryapis.com/.well-known/openid-configuration

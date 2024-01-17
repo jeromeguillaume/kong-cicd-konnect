@@ -5,7 +5,7 @@ metadata:
  namespace: client2
  annotations:
    konghq.com/strip-path: 'true'
-   konghq.com/plugins: client2-rate-limit, client2-oidc-ory, client2-cors
+   konghq.com/plugins: client2-cicd-rate-limit, client2-cicd-oidc-ory, client2-cicd-cors
 spec:
  parentRefs:
  - name: kong

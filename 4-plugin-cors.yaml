@@ -1,7 +1,7 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: client2-cors
+  name: client2-cicd-cors
   namespace: client2
 config:
   credentials: false

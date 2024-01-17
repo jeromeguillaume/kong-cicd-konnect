@@ -1,7 +1,7 @@
  apiVersion: configuration.konghq.com/v1
  kind: KongPlugin
  metadata:
-   name: client2-rate-limit
+   name: client2-cicd--rate-limit
    namespace: client2
    annotations:
      kubernetes.io/ingress.class: kong
