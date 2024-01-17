@@ -33,6 +33,6 @@ jobs:
           portalId=$(http --ignore-stdin https://eu.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[0].id')
           echo 'portalId='$portalId
           echo "control_plane=${{ vars.KONNECT_CONTROL_PLANE }}"
-          http --ignore-stdin https://eu.api.konghq.com/v2/runtime-groups Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r --arg control_plane "${{ vars.KONNECT_CONTROL_PLANE }}" '.data[]
+          http --ignore-stdin https://eu.api.konghq.com/v2/runtime-groups Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r --arg control_plane "${{ vars.KONNECT_CONTROL_PLANE }}" '.data[] | select(.name == $ARGS.named.control_plane) | .id'
           echo 'controlPlane='$controlPlane
           
