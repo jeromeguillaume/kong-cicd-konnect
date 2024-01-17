@@ -47,7 +47,7 @@ jobs:
       # Dev Portal
       - name: Konnect | Client2 | Deploy API Product and Publish it in the Dev Portal
         run: | 
-          echo -e "* Create API product 'Client2-MyHttpbin-CICD'"
+          echo "::group::Create API product 'Client2-MyHttpbin-CICD'"
           productId=$(http --ignore-stdin --raw '{"name":"Client2-MyHttpbin-CICD", "description":"A simple REST API service based on https://httpbin.apim.eu"}' POST https://$KONNECT_REGION.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN"  | jq -r '.id')
           echo 'productId='$productId
           portalId=$(http --ignore-stdin https://$KONNECT_REGION.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[0].id')
@@ -60,8 +60,9 @@ jobs:
             --raw '{"name":"v1", "publish_status":"published", "gateway_service": {"runtime_group_id":"'$controlPlane'", "id":"'$serviceId'"}}' \
             POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'versionId='$versionId
-
-          echo -e "* Push 'Client2-MyHttpbin-CICD' specification"
+          echo "::endgroup::"
+          
+          echo "::group::Push 'Client2-MyHttpbin-CICD' specification'"
           spec=$(base64 -i myhttpbin.json)
           specificationId=$(http --ignore-stdin \
             --raw '{"name":"myhttpbin.json", "content":"'$spec'"}' \
@@ -71,8 +72,9 @@ jobs:
             echo "Unable to push the JSON/YAML specifiation"
             exit 1
           fi
+          echo "::endgroup::"
 
-          echo -e "* Publish API product 'Client2-MyHttpbin-CICD'"
+          echo "::group::Publish API product 'Client2-MyHttpbin-CICD'"
           publicationId=$(http --ignore-stdin \
             --raw '{"portal_ids": ["'$portalId'"]}'\
             PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
@@ -81,3 +83,4 @@ jobs:
             echo "Unable to publish the API product"
             exit 1
           fi
+          echo "::endgroup::"
