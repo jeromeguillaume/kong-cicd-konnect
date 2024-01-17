@@ -55,11 +55,10 @@ jobs:
           echo -e "* Publish API product 'MyHttpbin-CICD'"
           publicationId=$(http --ignore-stdin \
             --raw '{"portal_ids": ["'$portalId'"]}'\
-            PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.idX')
+            PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'publicationId='$publicationId
           if [ "$publicationId" = "null" ]; then
             echo "Unable to publish the API product"
             exit 1
           fi
-
 
