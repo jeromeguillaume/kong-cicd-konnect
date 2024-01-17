@@ -52,7 +52,7 @@ jobs:
           currentProductId=$(http --ignore-stdin GET https://$KONNECT_REGION.api.konghq.com/v2/api-products 'filter[name]'==Client2-MyHttpbin-CICD Authorization:"Bearer $KONNECT_API_TOKEN"|jq -r '.data[0].id')
           if [ "$currentProductId" != "null" ]; then
             echo "Delete the current 'Client2-MyHttpbin-CICD' with id="$currentProductId
-            http -v --ignore-stdin DELETE https://$KONNECT_REGION.api.konghq.com/v2/api-products/$currentProductId Authorization:"Bearer $KONNECT_API_TOKEN"
+            http --ignore-stdin DELETE https://$KONNECT_REGION.api.konghq.com/v2/api-products/$currentProductId Authorization:"Bearer $KONNECT_API_TOKEN"
           fi
           echo "::endgroup::"
 
