@@ -30,7 +30,7 @@ jobs:
           productId=$(http --ignore-stdin --raw '{"name":"MyHttpbin-CICD", "description":"A simple REST API service based on https://httpbin.apim.eu"}' POST https://eu.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN"  | jq -r '.id')
           echo 'productId='$productId
           echo -e "* Get Portal Id"
-          http https://eu.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN"
+          http -v --ignore-stdin https://eu.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN"
           portalId=$(http https://eu.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[0].id')
           echo 'portalId='$portalId
           echo -e "* Adding new version to API product 'MyHttpbin-CICD'"
