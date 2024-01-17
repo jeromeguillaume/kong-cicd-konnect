@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "servers": [
       {
-        "url": "http://a680ee83024a44e96a759bfcd6182768-50500693.eu-west-3.elb.amazonaws.com"
+        "url": "https://a680ee83024a44e96a759bfcd6182768-50500693.eu-west-3.elb.amazonaws.com"
       }
     ],
     "info": {
