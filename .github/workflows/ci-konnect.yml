@@ -48,6 +48,6 @@ jobs:
           echo -e "* Publish API product 'MyHttpbin-CICD'"
           raw='{"portal_ids": ["'$portalId'"]}'
           publicationId=$(http -v --ignore-stdin --raw "$raw" PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
-          echo 'publicationId='$publicationId
+          echo 'publicationId='$publicationId'
 
 
