@@ -1,4 +1,4 @@
-name: CI-Konnect-client2
+name: CI-Kong-Client2
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
@@ -14,7 +14,7 @@ env:
   KONNECT_CONTROL_PLANE: ${{ vars.KONNECT_CONTROL_PLANE }}
   KONNECT_REGION: ${{ vars.KONNECT_REGION }}
 jobs:
-  konnect-Client2-Ingress-Controller:
+  Client2-Kong-Ingress-Controller:
     runs-on: self-hosted
     environment: production
     permissions:
@@ -33,8 +33,8 @@ jobs:
         run: |
           kubectl apply -f 2-plugin-rateLimiting.yaml
           kubectl apply -f 3-plugin-oidc-ory.yaml
-  konnect-Client2-devportal:
-    needs: [konnect-Client2-Ingress-Controller]
+  Client2-Kong-DevPortal:
+    needs: [Client2-Kong-Ingress-Controller]
     runs-on: self-hosted
     environment: production
     permissions:

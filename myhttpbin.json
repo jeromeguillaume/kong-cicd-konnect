@@ -16,7 +16,7 @@
       "version": "1.0.0"
     },
     "paths": {
-      "/myhttpbin/uuid": {
+      "/client2/CICDIngresshttpbin/uuid": {
         "get": {
           "description": "Generate and get an UUID",
           "operationId": "get_uuid",
@@ -31,7 +31,7 @@
           ]
         }
       },
-      "/myhttpbin/anything": {
+      "/client2/CICDIngresshttpbin/anything": {
         "get": {
           "description": "returns all your request",
           "operationId": "anything",
@@ -46,7 +46,7 @@
           ]
         }
       },
-      "/myhttpbin/anything/query": {
+      "/client2/CICDIngresshttpbin/anything/query": {
         "get": {
           "description": "returns all your query parameters",
           "operationId": "query",
@@ -75,7 +75,7 @@
           ]
         }
       },
-      "/myhttpbin/delay/{delay_value}": {
+      "/client2/CICDIngresshttpbin/delay/{delay_value}": {
         "get": {
           "description": "delay a responses by a defined number of secondes",
           "operationId": "delay",
@@ -104,7 +104,7 @@
           ]
         }
       },
-      "/myhttpbin/status/{codes}": {
+      "/client2/CICDIngresshttpbin/status/{codes}": {
         "get": {
           "description": "returns a http status code",
           "operationId": "status_code",
