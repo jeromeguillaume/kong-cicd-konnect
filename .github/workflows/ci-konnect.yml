@@ -27,7 +27,7 @@ jobs:
       - name: Konnect | Deploy API Product and Publish it in the Dev Portal
         run: |
           echo -e "* Creating API product 'MyHttpbin-CICD'"
-          description="A simple REST API service based on https://httpbin.apim.eu"
+          description='"A simple REST API service based on https://httpbin.apim.eu"'
           echo "Bearer $KONNECT_API_TOKEN">secrets.txt
-          http --ignore-stdin --raw '{"name":"MyHttpbin-CICD", "description":$description}' POST https://eu.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN" 
+          http -v --ignore-stdin --raw '{"name":"MyHttpbin-CICD", "description":$description}' POST https://eu.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN" 
           echo 'productId' $productId
