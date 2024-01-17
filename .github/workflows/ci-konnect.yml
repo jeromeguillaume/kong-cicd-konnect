@@ -28,5 +28,5 @@ jobs:
         run: |
           echo -e "* Creating API product 'MyHttpbin-CICD'"
           description="A simple REST API service based on https://httpbin.apim.eu"
-          http --raw '{"name":"MyHttpbin-CICD", "description":"$description"}' POST https://eu.api.konghq.com/v2/api-products 
+          http --ignore-stdin --raw '{"name":"MyHttpbin-CICD", "description":"$description"}' POST https://eu.api.konghq.com/v2/api-products 
           echo 'productId' $productId
