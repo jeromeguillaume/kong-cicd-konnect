@@ -26,13 +26,13 @@ konnect-Ingress-Controller:
 
       # Gateway Manager : Kong Ingress Controller
       - name: Konnect | Kong Ingress Controller | Route
-        run:
-        - kubectl apply -f 1-httpbinHttpRoute.yaml
+        run: |
+          kubectl apply -f 1-httpbinHttpRoute.yaml
       # Gateway Manager : Kong Ingress Controller
       - name: Konnect | Kong Ingress Controller | Plugins
-        run:
-        - kubectl apply -f 2-plugin-rateLimiting.yaml
-        - kubectl apply -f 3-plugin-oidc-ory.yaml
+        run: |
+          kubectl apply -f 2-plugin-rateLimiting.yaml
+          kubectl apply -f 3-plugin-oidc-ory.yaml
   konnect-devportal:
     runs-on: self-hosted
     environment: production
