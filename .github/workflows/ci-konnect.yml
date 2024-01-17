@@ -39,7 +39,7 @@ jobs:
           echo 'serviceId='$serviceId
           raw='{"name":"v1", "publish_status":"published", "gateway_service[runtime_group_id]":"'$controlPlane'", "gateway_service[id]":"'$serviceId'"}'
           echo "raw"=$raw
-          http -v --ignore-stdin --raw $raw POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN"
+          http -v --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN"
           versionId=$(http --ignore-stdin --raw $raw POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'versionId' $versionId
 
