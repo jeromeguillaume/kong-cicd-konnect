@@ -47,7 +47,7 @@ jobs:
             --raw '{"name":"myhttpbin.json", "content":"'$spec'"}' \
               POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'specificationId='$specificationId
-          if [ "$specificationId" -eq "null" ]; then
+          if [ "$specificationId" = "null" ]; then
             echo "Unable to push the JSON/YAML specifiation"
             exit 1
           fi
@@ -56,7 +56,7 @@ jobs:
           raw='{"portal_ids": ["'$portalId'"]}'
           publicationId=$(http --ignore-stdin --raw "$raw" PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'publicationId='$publicationId
-          if [ "$publicationId" -eq "null" ]; then
+          if [ "$publicationId" = "null" ]; then
             echo "Unable to publish the API product"
             exit 1
           fi
