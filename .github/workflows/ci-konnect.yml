@@ -34,6 +34,7 @@ jobs:
           kubectl apply -f 2-plugin-rateLimiting.yaml
           kubectl apply -f 3-plugin-oidc-ory.yaml
   konnect-devportal:
+    needs: [konnect-Ingress-Controller]
     runs-on: self-hosted
     environment: production
     permissions:
