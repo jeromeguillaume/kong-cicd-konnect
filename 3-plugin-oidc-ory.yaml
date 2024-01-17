@@ -4,14 +4,16 @@ metadata:
   name: client2-oidc-ory
   namespace: client2
 config:
-  issuer: 
+  issuer: https://charming-raman-uhtak7x69c.projects.oryapis.com/.well-known/openid-configuration
   client_id: 
-  - 
+  - 95639f39-9188-4afc-8160-250cee616025
   client_secret: 
-  - 
+  - fQRN9yBGe10f_VM8X1YdKbq1l
   consumer_optional: true
   auth_methods: 
   - client_credentials
+  - authorization_code
+  - userinfo
   verify_claims: false
   verify_parameters: false
   #scopes_required: 
