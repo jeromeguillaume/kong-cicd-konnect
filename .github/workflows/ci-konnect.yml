@@ -11,13 +11,13 @@ on:
 
 env:
   KONNECT_API_TOKEN: ${{ secrets.KONNECT_API_TOKEN }}
-  KONNECT_REGION: 'eu'
-  KONNECT_CONTROL_PLANE: 'cp-ingress-prod-multi1'
+  KONNECT_REGION: ${{ env.KONNECT_REGION }}
+  KONNECT_CONTROL_PLANE: ${{ env.KONNECT_CONTROL_PLANE }}
 
 jobs:
   konnect:
     runs-on: self-hosted
-    environment: Production
+    environment: production
     permissions:
       contents: read
       id-token: write
@@ -28,8 +28,7 @@ jobs:
       # Deploy
       - name: Deploy API Product and Publish it in the Dev Portal
         run: |
-          export KONNECT_REGION=eu
-          export KONNECT_CONTROL_PLANE=cp-ingress-prod-multi1
-          echo 'Token=' $KONNECT_API_TOKEN > ./secrets.txt
-          echo 'Region=' $KONNECT_REGION
-          echo 'CP=' $KONNECT_CONTROL_PLANE
+          echo -e "* Creating API product 'MyHttpbin-CICD'"
+          description="A simple REST API service based on https://httpbin.apim.eu"
+          productId=$(http POST https://$KONNECT_REGION.api.konghq.com/v2/api-products name="MyHttpbin-CICD" "description=$description" Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+          echo 'productId' $productId
