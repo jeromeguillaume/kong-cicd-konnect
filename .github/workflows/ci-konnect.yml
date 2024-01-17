@@ -24,7 +24,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Deploy
+      # Gateway Manager : Kong Ingress Controller
+      - name: Konnect | Kong Ingress Controller
+        run:
+        # HTTPRoute
+        - kubectl apply -f 1-httpbinHttpRoute.yaml
+        # Plugin rate-limiting et OIDC
+        - kubectl apply -f 2-plugin-rateLimiting.yaml
+        - kubectl apply -f 3-plugin-oidc-ory.yaml
+
+      # Dev Portal
       - name: Konnect | Deploy API Product and Publish it in the Dev Portal
         run: | 
           echo -e "* Create API product 'MyHttpbin-CICD'"

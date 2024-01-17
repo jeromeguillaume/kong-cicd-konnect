@@ -1,0 +1,22 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+ name: httpbin-route
+ namespace: client2
+ annotations:
+   konghq.com/strip-path: 'true'
+   konghq.com/plugins: client2-rate-limit
+spec:
+ parentRefs:
+ - name: kong
+   namespace: kong
+ rules:
+ - matches:
+   - path:
+       type: PathPrefix
+       value: /client2/Ingresshttpbin
+   backendRefs:
+   - name: httpbin
+     kind: Service
+     port: 8080
+ 

@@ -1,0 +1,13 @@
+ apiVersion: configuration.konghq.com/v1
+ kind: KongPlugin
+ metadata:
+   name: client2-rate-limit
+   namespace: client2
+   annotations:
+     kubernetes.io/ingress.class: kong
+     konghq.com/plugins: ratelimit
+ config:
+   minute: 10
+   policy: local
+   limit_by: service
+ plugin: rate-limiting

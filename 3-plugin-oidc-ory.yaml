@@ -1,0 +1,21 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: client2-oidc-ory
+  namespace: client2
+config:
+  issuer: 
+  client_id: 
+  - 
+  client_secret: 
+  - 
+  consumer_optional: true
+  auth_methods: 
+  - client_credentials
+  verify_claims: false
+  verify_parameters: false
+  #scopes_required: 
+  #- httpbin
+  #consumer_claim: 
+  #- clientId
+plugin: openid-connect
