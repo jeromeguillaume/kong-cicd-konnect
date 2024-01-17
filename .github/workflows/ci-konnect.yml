@@ -38,14 +38,12 @@ jobs:
           echo 'serviceId='$serviceId
           raw='{"name":"v1", "publish_status":"published", "gateway_service": {"runtime_group_id":"'$controlPlane'", "id":"'$serviceId'"}}'
           echo "raw"=$raw
-          http -v --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN"
-          exit
           versionId=$(http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'versionId='$versionId
           echo -e "* Push 'MyHttpbin-CICD' specification"
           spec=$(base64 -i myhttpbin.json)
           raw='{"name":"myhttpbin.json", "content":"'$spec'"}'
-          http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN"
+          http --quite --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN"
           echo -e "* Publish API product 'MyHttpbin-CICD'"
           raw='{"portal_ids": ["'$portalId'"]}'
           http -v --ignore-stdin --raw "$raw" PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN"
