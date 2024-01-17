@@ -14,6 +14,25 @@ env:
   KONNECT_CONTROL_PLANE: ${{ vars.KONNECT_CONTROL_PLANE }}
   KONNECT_REGION: ${{ vars.KONNECT_REGION }}
 jobs:
+konnect-Ingress-Controller:
+    runs-on: self-hosted
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Gateway Manager : Kong Ingress Controller
+      - name: Konnect | Kong Ingress Controller | Route
+        run:
+        - kubectl apply -f 1-httpbinHttpRoute.yaml
+      # Gateway Manager : Kong Ingress Controller
+      - name: Konnect | Kong Ingress Controller | Plugins
+        run:
+        - kubectl apply -f 2-plugin-rateLimiting.yaml
+        - kubectl apply -f 3-plugin-oidc-ory.yaml
   konnect-devportal:
     runs-on: self-hosted
     environment: production
@@ -68,4 +87,3 @@ jobs:
             echo "Unable to publish the API product"
             exit 1
           fi
-
