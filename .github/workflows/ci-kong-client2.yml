@@ -48,7 +48,15 @@ jobs:
       - name: Konnect | Client2 | Deploy API Product and Publish it in the Dev Portal
         run: | 
           #
-          echo "::group::Create API product 'Client2-MyHttpbin-CICD'"
+          echo "::group::Check existing API product: 'Client2-MyHttpbin-CICD'"
+          currentProductId=$(http --ignore-stdin GET https://$KONNECT_REGION.api.konghq.com/v2/api-products 'filter[name]'==Client2-MyHttpbin-CICD Authorization:"Bearer $KONNECT_API_TOKEN"|jq -r '.data[0].id')
+          if [ "$currentProductId" != "null" ]; then
+            echo "Delete the current 'Client2-MyHttpbin-CICD' with id="$currentProductId
+            http -v --ignore-stdin DELETE https://$KONNECT_REGION.api.konghq.com/v2/api-products/$currentProductId Authorization:"Bearer $KONNECT_API_TOKEN"
+          fi
+          echo "::endgroup::"
+
+          echo "::group::Create API product: 'Client2-MyHttpbin-CICD'"
           productId=$(http --ignore-stdin --raw '{"name":"Client2-MyHttpbin-CICD", "description":"A simple REST API service based on https://httpbin.apim.eu"}' POST https://$KONNECT_REGION.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN"  | jq -r '.id')
           echo 'productId='$productId
           portalId=$(http --ignore-stdin https://$KONNECT_REGION.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[0].id')
@@ -75,7 +83,7 @@ jobs:
           fi
           echo "::endgroup::"
 
-          echo "::group::Publish API product 'Client2-MyHttpbin-CICD'"
+          echo "::group::Publish API product: 'Client2-MyHttpbin-CICD'"
           publicationId=$(http --ignore-stdin \
             --raw '{"portal_ids": ["'$portalId'"]}'\
             PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
