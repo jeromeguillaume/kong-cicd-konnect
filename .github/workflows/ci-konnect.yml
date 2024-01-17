@@ -41,7 +41,5 @@ jobs:
           echo "raw"=$raw
           versionId=$(http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'versionId' $versionId
-
-    
-
-          
+          spec=$(base64 -i myhttpbin.json)
+          http POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications "name=myhttpbin.json" content=$spec Authorization:"Bearer $KONNECT_API_TOKEN"
