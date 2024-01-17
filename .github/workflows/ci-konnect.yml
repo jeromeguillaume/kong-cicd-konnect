@@ -29,6 +29,7 @@ jobs:
           echo -e "* Creating API product 'MyHttpbin-CICD'"
           description='"A simple REST API service based on https://httpbin.apim.eu"'
           raw='{"name":"MyHttpbin-CICD", "description":$description}'
+          echo $raw
           echo "Bearer $KONNECT_API_TOKEN">secrets.txt
-          http -v --ignore-stdin --raw $raw POST https://eu.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN" 
+          http -v --ignore-stdin --raw "$raw" POST https://eu.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN" 
           echo 'productId' $productId
