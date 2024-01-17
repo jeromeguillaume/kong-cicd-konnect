@@ -32,6 +32,6 @@ jobs:
           echo -e "* Get Portal Id"
           portalId=$(http --ignore-stdin https://eu.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[0].id')
           echo 'portalId='$portalId
-          echo "control_plane=${{ env.KONNECT_CONTROL_PLANE }}"
+          echo "control_plane=${{ vars.KONNECT_CONTROL_PLANE }}"
           echo 'controlPlane='$controlPlane
           
