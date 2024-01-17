@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v3
 
       # Deploy
-      - name: Konnect | Deploy API Product and Publish it in the Dev Portal
+      - name: Konnect | Deploy API Product and Publish it in the DevPortal
         run: |
           echo -e "* Creating API product 'MyHttpbin-CICD'"
           productId=$(http --ignore-stdin --raw '{"name":"MyHttpbin-CICD", "description":"A simple REST API service based on https://httpbin.apim.eu"}' POST https://$KONNECT_REGION.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN"  | jq -r '.id')
