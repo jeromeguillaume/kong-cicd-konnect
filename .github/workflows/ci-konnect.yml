@@ -27,7 +27,7 @@ jobs:
       # Deploy
       - name: Konnect | Deploy API Product and Publish it in the Dev Portal
         run: |
-          echo -e "* Creating API product 'MyHttpbin-CICD'"
+          echo -e "* Create API product 'MyHttpbin-CICD'"
           productId=$(http --ignore-stdin --raw '{"name":"MyHttpbin-CICD", "description":"A simple REST API service based on https://httpbin.apim.eu"}' POST https://$KONNECT_REGION.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN"  | jq -r '.id')
           echo 'productId='$productId
           portalId=$(http --ignore-stdin https://$KONNECT_REGION.api.konghq.com/konnect-api/api/portals Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[0].id')
@@ -43,8 +43,11 @@ jobs:
           echo -e "* Push 'MyHttpbin-CICD' specification"
           spec=$(base64 -i myhttpbin.json)
           raw='{"name":"myhttpbin.json", "content":"'$spec'"}'
-          http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN"
+          specificationId=$(http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+          echo 'specificationId='$specificationId
           echo -e "* Publish API product 'MyHttpbin-CICD'"
           raw='{"portal_ids": ["'$portalId'"]}'
-          http -v --ignore-stdin --raw "$raw" PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN"
+          publicationId=$(http -v --ignore-stdin --raw "$raw" PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+          echo 'publicationId='$publicationId
+
 
