@@ -36,15 +36,17 @@ jobs:
           echo 'controlPlane='$controlPlane
           serviceId=$(http --ignore-stdin https://$KONNECT_REGION.api.konghq.com/v2/runtime-groups/$controlPlane/core-entities/services  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[] | select(.name | test("^httproute.client2") ) | .id')
           echo 'serviceId='$serviceId
-          raw='{"name":"v1", "publish_status":"published", "gateway_service": {"runtime_group_id":"'$controlPlane'", "id":"'$serviceId'"}}'
           versionId=$(http --ignore-stdin \
-                    --raw '{"name":"v1", "publish_status":"published", "gateway_service": {"runtime_group_id":"'$controlPlane'", "id":"'$serviceId'"}}' \
-                    POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+            --raw '{"name":"v1", "publish_status":"published", "gateway_service": {"runtime_group_id":"'$controlPlane'", "id":"'$serviceId'"}}' \
+            POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'versionId='$versionId
+
           echo -e "* Push 'MyHttpbin-CICD' specification"
           spec=$(base64 -i myhttpbin.json)
-          raw='{"name":"myhttpbin.json", "content":"'$spec'"}'
-          specificationId=$(http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+          specificationId=$(http --ignore-stdin \
+            --raw '{"name":"myhttpbin.json", "content":"'$spec'"}' \
+              POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+
           echo 'specificationId='$specificationId
           echo -e "* Publish API product 'MyHttpbin-CICD'"
           raw='{"portal_ids": ["'$portalId'"]}'
