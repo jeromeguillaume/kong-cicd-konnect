@@ -47,7 +47,7 @@ jobs:
       # Dev Portal
       - name: Konnect | Client2 | Deploy API Product and Publish it in the Dev Portal
         run: | 
-          #Begin
+          #
           echo "::group::Create API product 'Client2-MyHttpbin-CICD'"
           productId=$(http --ignore-stdin --raw '{"name":"Client2-MyHttpbin-CICD", "description":"A simple REST API service based on https://httpbin.apim.eu"}' POST https://$KONNECT_REGION.api.konghq.com/v2/api-products Authorization:"Bearer $KONNECT_API_TOKEN"  | jq -r '.id')
           echo 'productId='$productId
