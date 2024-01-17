@@ -36,9 +36,10 @@ jobs:
           controlPlane=$(http --ignore-stdin https://$KONNECT_REGION.api.konghq.com/v2/runtime-groups Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r --arg control_plane "$KONNECT_CONTROL_PLANE" '.data[] | select(.name == $ARGS.named.control_plane) | .id')
           echo 'controlPlane='$controlPlane
           serviceId=$(http --ignore-stdin https://$KONNECT_REGION.api.konghq.com/v2/runtime-groups/$controlPlane/core-entities/services  Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.data[] | select(.name | test("^httproute.client2") ) | .id')
-          echo 'serviceId' $serviceId
-          raw='{"name":"v1", "publish_status":"published", "gateway_service[runtime_group_id]":"$controlPlane", "gateway_service[id]":"$serviceId"}
-          versionId=$(http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+          echo 'serviceId='$serviceId
+          raw='{"name":"v1", "publish_status":"published", "gateway_service[runtime_group_id]":"$controlPlane", "gateway_service[id]":"$serviceId"}'
+          echo "raw"=$raw
+          versionId=$(http --ignore-stdin --raw $raw POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'versionId' $versionId
 
     
