@@ -1,0 +1,9 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: client2-cicd-custom-code
+  namespace: client2
+plugin: pre-function
+config:
+  access:
+  - |

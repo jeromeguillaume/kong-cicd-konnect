@@ -30,6 +30,7 @@ jobs:
           kubectl apply -f 2-plugin-rateLimiting.yaml
           kubectl apply -f 3-plugin-oidc-ory.yaml
           kubectl apply -f 4-plugin-cors.yaml
+          cat 5a-plugin-prefunction.yaml 5b-customCode.lua | kubectl apply -f -
       # Gateway Manager : Kong Ingress Controller | HTTPRoute
       - name: Konnect | Client2 | Kong Ingress Controller | Route
         run: |
