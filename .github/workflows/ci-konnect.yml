@@ -43,7 +43,7 @@ jobs:
           echo -e "* Push 'MyHttpbin-CICD' specification"
           spec=$(base64 -i myhttpbin.json)
           raw='{"name":"myhttpbin.json", "content":"'$spec'"}'
-          http --quite --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN"
+          http --ignore-stdin --raw "$raw" POST https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId/product-versions/$versionId/specifications  Authorization:"Bearer $KONNECT_API_TOKEN"
           echo -e "* Publish API product 'MyHttpbin-CICD'"
           raw='{"portal_ids": ["'$portalId'"]}'
           http -v --ignore-stdin --raw "$raw" PATCH https://$KONNECT_REGION.api.konghq.com/v2/api-products/$productId  Authorization:"Bearer $KONNECT_API_TOKEN"
