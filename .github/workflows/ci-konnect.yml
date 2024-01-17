@@ -11,9 +11,7 @@ on:
 
 env:
   KONNECT_API_TOKEN: ${{ secrets.KONNECT_API_TOKEN }}
-  KONNECT_REGION: ${{ env.KONNECT_REGION }}
-  KONNECT_CONTROL_PLANE: ${{ env.KONNECT_CONTROL_PLANE }}
-
+  
 jobs:
   konnect:
     runs-on: self-hosted
@@ -30,5 +28,5 @@ jobs:
         run: |
           echo -e "* Creating API product 'MyHttpbin-CICD'"
           description="A simple REST API service based on https://httpbin.apim.eu"
-          productId=$(http POST https://$KONNECT_REGION.api.konghq.com/v2/api-products name="MyHttpbin-CICD" "description=$description" Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
+          productId=$(http POST https://${{ env.KONNECT_REGION }}.api.konghq.com/v2/api-products name="MyHttpbin-CICD" "description=$description" Authorization:"Bearer $KONNECT_API_TOKEN" | jq -r '.id')
           echo 'productId' $productId
