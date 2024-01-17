@@ -24,15 +24,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Gateway Manager : Kong Ingress Controller
-      - name: Konnect | Client2 | Kong Ingress Controller | Route
-        run: |
-          kubectl apply -f 1-httpbinHttpRoute.yaml
-      # Gateway Manager : Kong Ingress Controller
+      # Gateway Manager : Kong Ingress Controller | Plugin
       - name: Konnect | Client2 | Kong Ingress Controller | Plugins
         run: |
           kubectl apply -f 2-plugin-rateLimiting.yaml
           kubectl apply -f 3-plugin-oidc-ory.yaml
+          kubectl apply -f 4-plugin-cors.yaml
+      # Gateway Manager : Kong Ingress Controller | HTTPRoute
+      - name: Konnect | Client2 | Kong Ingress Controller | Route
+        run: |
+          kubectl apply -f 1-httpbinHttpRoute.yaml
   Client2-Kong-DevPortal:
     needs: [Client2-Kong-Ingress-Controller]
     runs-on: self-hosted
