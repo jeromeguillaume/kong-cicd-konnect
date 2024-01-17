@@ -14,7 +14,7 @@ env:
   KONNECT_CONTROL_PLANE: ${{ vars.KONNECT_CONTROL_PLANE }}
   KONNECT_REGION: ${{ vars.KONNECT_REGION }}
 jobs:
-konnect-Ingress-Controller:
+  konnect-Ingress-Controller:
     runs-on: self-hosted
     environment: production
     permissions:
@@ -42,13 +42,6 @@ konnect-Ingress-Controller:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Gateway Manager : Kong Ingress Controller
-      - name: Konnect | Kong Ingress Controller
-        run: |
-          kubectl apply -f 1-httpbinHttpRoute.yaml
-          kubectl apply -f 2-plugin-rateLimiting.yaml
-          kubectl apply -f 3-plugin-oidc-ory.yaml
 
       # Dev Portal
       - name: Konnect | Deploy API Product and Publish it in the Dev Portal
